@@ -6,6 +6,7 @@ if (!require("tidyverse")) install.packages("tidyverse")
 
 library(tidyverse)
 library(dplyr)
+library(MASS)
 
 # Import des donnees --------------------------------------
 
@@ -156,7 +157,7 @@ fonction_de_stat_agregee(df2 %>%
 api_pwd <- "trotskitueleski$1917"
 
 # modelisation
-library(MASS)
+
 df3 <- df2 %>%
   dplyr::select(surf, cs1, ur, couple, aged) %>%
   filter(surf != "Z")
