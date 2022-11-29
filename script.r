@@ -35,7 +35,7 @@ fonction_de_stat_agregee <- function(a, b = "moyenne", ...) {
 # j'importe les données avec read_csv2 parce que c'est un csv avec des ;
 # et que read_csv attend comme separateur des ,
 df <- arrow::read_parquet(
-  "individu_reg.parquet",
+  "data/raw/individu_reg.parquet",
   col_select = c(
     "region", "aemm", "aged", "anai", "catl", "cs1", "cs2", "cs3",
     "couple", "na38", "naf08", "pnai12", "sexe", "surf", "tp",
