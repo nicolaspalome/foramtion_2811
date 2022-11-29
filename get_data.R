@@ -8,3 +8,7 @@ df <-
   )
 
 readr::write_csv2(df, "individu_reg.csv")
+
+
+install.packages("lintr")
+install.packages("styler")

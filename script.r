@@ -1,5 +1,4 @@
 rm(list = ls())
-setwd("/home/onyxia/formation-bonnes-pratiques-R")
 
 if (!require('ggplot2')) install.packages('ggplot2')
 if (!require('stringr')) install.packages('stringr')
@@ -12,7 +11,7 @@ library(dplyr)
 
 # j'importe les données avec read_csv2 parce que c'est un csv avec des ; et que read_csv attend comme separateur des , 
 df <- readr::read_csv2(
-  "/home/onyxia/formation-bonnes-pratiques-R/individu_reg.csv",
+  "individu_reg.csv",
   col_names = c("region", "aemm", "aged", "anai","catl","cs1", "cs2", "cs3", "couple", "na38", "naf08", "pnai12", "sexe", "surf", "tp", "trans", "ur"))
 
 # y a un truc qui va pas avec l'import, je corrige
@@ -27,21 +26,21 @@ print(df2, 20)
 # combien de professions
 print("Nombre de professions :")
 print(summarise(df2,length(unique(unlist(cs3[!is.na(cs3)])))))
-print("Nombre de professions :'')
-"print(summarise(df2,length(unique(unlist(cs2[!is.na(cs2)])))))
-      oprint("Nombre de professions :")
-      print(summarise(df2,length(unique(unlist(cs1[!is.na(cs1)])))))
-      
-      summarise(group_by(df2, aged), n())
-      
-      decennie_a_partir_annee    = function(ANNEE){ return(ANNEE - ANNEE %%
-                                                             10) }
+print("Nombre de professions :")
+print(summarise(df2,length(unique(unlist(cs2[!is.na(cs2)])))))
+print("Nombre de professions :")
+print(summarise(df2,length(unique(unlist(cs1[!is.na(cs1)])))))
+
+summarise(group_by(df2, aged), n())
+
+decennie_a_partir_annee    = function(ANNEE){ return(ANNEE - ANNEE %%
+                                                       10) }
       
       
       df2 %>% select(aged) %>% ggplot(.) + geom_histogram(aes(x = 5*floor(as.numeric(aged)/5)), stat = "count")
       
       ggplot(df2[as.numeric(df2$aged)>50,c(3,4)], aes(
-        x=as.numeric(aged)#x = as.numeric(aged) - as.numeric(aged) %% 5,
+        x=as.numeric(aged), #x = as.numeric(aged) - as.numeric(aged) %% 5,
         y = ..density.., fill = factor(decennie_a_partir_annee(as.numeric(aemm)))), alpha = 0.2) + geom_histogram()#position = "dodge") + scale_fill_viridis_d()
       
       
@@ -57,7 +56,7 @@ print("Nombre de professions :'')
       # stats surf par statut
       df3 = tibble(df2 %>% group_by(couple, surf) %>% summarise(x = n()) %>% group_by(couple) %>% mutate(y = 100*x/sum(x))
       )
-      ggplot(df3) %>%
+      ggplot(df3) +
         geom_bar(aes(x = surf, y = y, color = couple), stat = "identity", position = "dodge")
       
       # stats trans par statut
@@ -66,10 +65,9 @@ print("Nombre de professions :'')
       p <- ggplot(df3) +
         geom_bar(aes(x = trans, y = y, color = couple), stat = "identity", position = "dodge")
       
-      dir.create("/home/onyxia/formation-bonnes-pratiques-R/output")
-      setwd("ome/onyxia/formation-bonnes-pratiques-R/output")
+      dir.create("output")
       
-      ggsave("p.png", p)
+      ggsave("output/p.png", p)
       
       # recode valeurs manquantes
       #valeursManquantes <- data.frame(colonne = c(""), NBRE = c(NA))
@@ -91,7 +89,7 @@ print("Nombre de professions :'')
       # df2[df2$aemm == "ZZZZ","aemm"] <- NA
       
       str(df2)
-      df2[,nrow(df2)-1] <- factor(df2[,nrow(df2)-1])
+      df2[,ncol(df2)-1] <- factor(df2[,ncol(df2)-1])
       df2$ur=factor(df2$ur)
       library(forcats)
       df2$sexe <- 
@@ -113,7 +111,7 @@ print("Nombre de professions :'')
         return(x)
       }
       fonction_de_stat_agregee(rnorm(10))
-      fonction_de_stat_agregee(rnorm(10), "ecart type")
+      fonction_de_stat_agregee(rnorm(10), "ecart-type")
       fonction_de_stat_agregee(rnorm(10), "variance")
       
       
@@ -131,5 +129,5 @@ print("Nombre de professions :'')
       df3[,"cs1"]=factor(df3$cs1)
       df3 %>% 
         filter(couple == "2" & aged>40 & aged<60)
-      polr(surf ~ cs1 + factor(ur), df3)
+      MASS::polr(surf ~ cs1 + factor(ur), df3)
       
