@@ -7,6 +7,8 @@ if (!require("tidyverse")) install.packages("tidyverse")
 library(tidyverse)
 library(dplyr)
 
+# Import des donnees --------------------------------------
+
 # j'importe les données avec read_csv2 parce que c'est un csv avec des ;
 # et que read_csv attend comme separateur des ,
 df <- readr::read_csv2(
@@ -18,6 +20,7 @@ df <- readr::read_csv2(
   )
 )
 
+## TITRE NIVEAU 2 ==========
 # y a un truc qui va pas avec l'import, je corrige
 colnames(df) <- df[1, ]
 df <- df[2:nrow(df), ]
@@ -58,6 +61,8 @@ ggplot(df2[as.numeric(df2$aged) > 50, c(3, 4)], aes(
 ), alpha = 0.2) +
   geom_histogram() # position = "dodge") + scale_fill_viridis_d()
 
+
+# Stat descriptives --------------------------------------
 
 
 # part d'homme dans chaque cohort
